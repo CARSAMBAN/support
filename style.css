@@ -764,3 +764,44 @@ section {
   0% { transform: translateX(0) scale(1); }
   100% { transform: translateX(-300vw) scale(1.05); }
 }
+/* ===== INSTAGRAM BROWSER FIX ===== */
+.instagram-browser .navbar,
+.instagram-browser nav {
+  background: rgba(0, 0, 0, 0.98) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.instagram-browser .hero-track {
+  animation: none !important;
+  display: flex;
+  width: 300vw; /* Sadece 3 görsel göster */
+}
+
+.instagram-browser .hero-slide {
+  width: 100vw;
+}
+
+/* Instagram'da çalışmayan efektleri kaldır */
+.instagram-browser .card::before,
+.instagram-browser .card::after,
+.instagram-browser .social::before,
+.instagram-browser .social::after {
+  display: none !important;
+}
+
+/* Basit animasyonlar */
+.instagram-browser .cta,
+.instagram-browser .social {
+  animation: none !important;
+}
+
+/* Instagram için basit scroll */
+.instagram-browser ::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hero resimlerini optimize et */
+.instagram-browser .hero-slide img {
+  filter: brightness(70%);
+}
