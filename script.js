@@ -1,32 +1,100 @@
-// ===== NAVBAR ANIMATIONS =====
+// ================= NAVBAR =================
 const navbar = document.querySelector('.navbar');
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
 const navLinks = document.querySelectorAll("#navMenu a");
 
-// Navbar scroll efekti
 let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  const currentScroll = window.pageYOffset;
-  
-  if (currentScroll > 50) {
-    navbar.classList.add('scrolled');
-    
-    // Yukarı scroll'da göster, aşağı scroll'da gizle
-    if (currentScroll > lastScroll && currentScroll > 200) {
-      navbar.style.transform = 'translateY(-100%)';
-      navbar.style.transition = 'transform 0.3s ease';
+
+if (navbar) {
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 50) {
+      navbar.classList.add('scrolled');
+      if (currentScroll > lastScroll && currentScroll > 200) {
+        navbar.style.transform = 'translateY(-100%)';
+      } else {
+        navbar.style.transform = 'translateY(0)';
+      }
     } else {
+      navbar.classList.remove('scrolled');
       navbar.style.transform = 'translateY(0)';
     }
-  } else {
-    navbar.classList.remove('scrolled');
-    navbar.style.transform = 'translateY(0)';
-  }
-  
-  lastScroll = currentScroll;
-  updateActiveLink();
+
+    lastScroll = currentScroll;
+  });
+}
+
+if (menuToggle && navMenu) {
+  menuToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+    document.body.style.overflow =
+      navMenu.classList.contains("active") ? "hidden" : "";
+  });
+}
+
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("active");
+    document.body.style.overflow = "";
+  });
 });
+
+// ================= HERO SLIDER (MOBİL FIX) =================
+const heroTrack = document.querySelector('.hero-track');
+
+if (heroTrack) {
+  let index = 0;
+  const slides = heroTrack.children;
+  const slideCount = slides.length / 2;
+  const slideWidth = slides[0].offsetWidth;
+
+  setInterval(() => {
+    index++;
+    heroTrack.style.transition = 'transform 0.6s ease';
+    heroTrack.style.transform = `translateX(-${index * slideWidth}px)`;
+
+    if (index >= slideCount) {
+      setTimeout(() => {
+        heroTrack.style.transition = 'none';
+        heroTrack.style.transform = 'translateX(0)';
+        index = 0;
+      }, 700);
+    }
+  }, 3000);
+}
+
+// ================= FORM (GÜVENLİ) =================
+const teklifForm = document.getElementById("teklifForm");
+
+if (teklifForm) {
+  teklifForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const ad = document.getElementById("ad").value.trim();
+    const tel = document.getElementById("telefon").value.trim();
+    const hizmet = document.getElementById("hizmet").value;
+    const mesaj = document.getElementById("mesaj").value.trim();
+
+    if (!ad || !tel) {
+      alert("Lütfen ad ve telefon giriniz");
+      return;
+    }
+
+    const whatsappMesaj =
+      `Merhaba, teklif almak istiyorum.%0A%0A` +
+      `👤 Ad: ${ad}%0A📞 Tel: ${tel}%0A🎥 Hizmet: ${hizmet}%0A📝 Not: ${mesaj || "Yok"}`;
+
+    window.open(
+      `https://wa.me/905417679111?text=${whatsappMesaj}`,
+      "_blank"
+    );
+
+    teklifForm.reset();
+  });
+}
+
 
 // Aktif link takibi
 function updateActiveLink() {
@@ -243,3 +311,24 @@ document.querySelectorAll('.section').forEach(section => {
 
 // Sayfa yüklendiğinde aktif linki ayarla
 updateActiveLink();
+const heroTrack = document.querySelector('.hero-track');
+
+if (heroTrack) {
+  let index = 0;
+  const slides = heroTrack.children;
+  const slideWidth = slides[0].offsetWidth;
+
+  setInterval(() => {
+    index++;
+    heroTrack.style.transition = 'transform 0.6s ease';
+    heroTrack.style.transform = `translateX(-${slideWidth * index}px)`;
+
+    if (index >= slides.length / 2) {
+      setTimeout(() => {
+        heroTrack.style.transition = 'none';
+        heroTrack.style.transform = 'translateX(0)';
+        index = 0;
+      }, 700);
+    }
+  }, 3000);
+}
